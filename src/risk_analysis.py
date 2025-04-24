@@ -1,57 +1,60 @@
 from langchain_community.chat_models import ChatOpenAI
-from document_processing import process_document  # ✅ Solo si es necesario
-from document_processing import load_document
+import os
+from config import OPENAI_API_KEY
 
-def evaluate_risks(document_text):
+# Opcional: si tienes configuración externa
+
+MODEL_NAME = "gpt-4-turbo"
+TEMPERATURE = 0.3
+
+def evaluate_risks(document_text: str) -> str:
     """
-    Evalúa los riesgos regulatorios y éticos del documento analizando su contenido.
-    Retorna una evaluación categorizada de riesgos.
+    Analiza el texto del documento y devuelve un string JSON con:
+      - "questions": lista de preguntas para profundizar
+      - (o en segunda fase) "identified_risks" y "mitigations"
     """
-    llm = ChatOpenAI(model_name="gpt-4-turbo")  # Usa GPT-4 Turbo
+    llm = ChatOpenAI(
+        model_name=MODEL_NAME,
+        openai_api_key=OPENAI_API_KEY,
+        temperature=TEMPERATURE,
+    )
 
     prompt = f"""
-   Eres un experto en regulación y ética de la IA. Tu tarea es analizar el siguiente documento y generar un informe detallado sobre los riesgos regulatorios y éticos que pueda presentar el proyecto descrito.
+Eres un experto en regulación y ética de la IA. Tu tarea es evaluar el siguiente documento y generar un informe sobre riesgos regulatorios y éticos del proyecto descrito.
 
-### **Fase 1: Identificación de Riesgos y Preguntas para el Usuario**
-1. Analiza el documento y detecta riesgos en las siguientes categorías:
-   - Cumplimiento normativo (GDPR, AI Act, etc.).
-   - Fairness y sesgos (género, raza, socioeconómicos, etc.).
-   - Transparencia y explicabilidad del sistema.
-   - Privacidad y seguridad de los datos.
-   - Impacto social y ético.
+---
 
-2. Para cada posible riesgo identificado, genera **preguntas para el usuario** que ayuden a confirmar o descartar el riesgo. 
-   - Ejemplo: Si detectas que el modelo usa datos demográficos sin explicaciones claras, pregunta:  
-     *"El modelo diferencia las respuestas según el género del usuario? ¿Cómo se garantiza que esto no genere sesgos?"*
+### 🧭 Fase 1: Identificación de Riesgos Potenciales
 
-3. Devuelve solo las preguntas en una lista JSON bajo la clave `"questions"`. Espera la respuesta del usuario antes de generar el informe.
+1. Analiza el texto y detecta riesgos en las siguientes categorías:
+   - Cumplimiento normativo (GDPR, AI Act, etc.)
+   - Fairness y sesgos (género, raza, socioeconómicos, etc.)
+   - Transparencia y explicabilidad
+   - Privacidad y seguridad de datos
+   - Impacto social y ético
 
-### **Fase 2: Generación del Informe**
-Tras recibir las respuestas del usuario, genera un informe con los siguientes apartados:
+2. Para cada riesgo, genera una o más **preguntas para el usuario** que te permitan confirmarlo o descartarlo. Ejemplo:
+   - "¿El sistema toma decisiones automatizadas sobre personas? ¿Cómo se justifica legalmente eso?"
 
-#### 📌 **1. Identificación de Riesgos**
-- Enumera los riesgos confirmados tras la interacción con el usuario.
-- Justifica cada riesgo con ejemplos específicos del documento.
+3. Devuelve solo las preguntas en formato JSON bajo la clave `"questions"`.
 
-#### 🛠 **2. Estrategias de Mitigación**
-- Propón soluciones detalladas para cada riesgo detectado.
-- Explica cómo estas estrategias ayudan a cumplir normativas y principios éticos.
+---
 
-#### 📝 **3. Conclusiones**
-- Resumen de la evaluación realizada.
-- Recomendaciones finales para reducir los riesgos del proyecto.
+### 🧪 Fase 2: Informe Final (si ya se han respondido preguntas)
 
-### **Datos del Documento:**
+Si se te proporcionan respuestas del usuario, evalúa cada riesgo de nuevo y genera un informe JSON con:
+
+- `"identified_risks"`: lista de riesgos confirmados, con justificación breve.
+- `"mitigations"`: estrategias detalladas para mitigar cada riesgo detectado.
+
+---
+
+Texto del Documento:
+\"\"\"
 {document_text}
+\"\"\"
 
-Responde en formato JSON con claves `"questions"` para la Fase 1 y `"report"` para la Fase 2.
+Responde solo en formato JSON.
 """
 
-    response = llm.predict(prompt)
-    return response  # Devuelve la evaluación en JSON
-
-document_text = load_document("data/ai_act_summary.txt")
-risks = evaluate_risks(document_text)
-
-print("Evaluación de Riesgos:")
-print(risks)
+    return llm.predict(prompt)

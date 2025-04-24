@@ -1,57 +1,49 @@
+import os
 import PyPDF2
 import docx
-import os
 
-def load_document(file_path):
-    """Carga el contenido de un archivo de texto o PDF."""
+def load_document_from_path(file_path: str) -> str:
+    """Carga el contenido de un archivo de texto o PDF desde disco."""
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"El archivo no existe: {file_path}")
+
     _, ext = os.path.splitext(file_path)
-    if ext == ".txt":
-        with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
-    elif ext == ".pdf":
-        with open(file_path, "rb") as file:
-            reader = PyPDF2.PdfReader(file)
-            return "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+    if ext.lower() == ".txt":
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    elif ext.lower() == ".pdf":
+        with open(file_path, "rb") as f:
+            reader = PyPDF2.PdfReader(f)
+            return "\n".join(
+                page.extract_text() or "" for page in reader.pages
+            )
     else:
-        raise ValueError("Formato de archivo no compatible.")
+        raise ValueError(f"Formato no soportado: {ext}")
 
-# Cargar el documento del AI Act
-document_text = load_document("data/ai_act_summary.pdf")
-
-def extract_text_from_pdf(pdf_file):
-    """Extrae texto de un archivo PDF."""
+def extract_text_from_pdf(pdf_file) -> str:
+    """Extrae texto de un objeto file-like PDF cargado por Streamlit."""
     reader = PyPDF2.PdfReader(pdf_file)
-    text = "\n".join(page.extract_text() for page in reader.pages if page.extract_text())
-    return text
+    return "\n".join(page.extract_text() or "" for page in reader.pages)
 
-def extract_text_from_docx(docx_file):
-    """Extrae texto de un archivo DOCX."""
+def extract_text_from_docx(docx_file) -> str:
+    """Extrae texto de un objeto file-like DOCX cargado por Streamlit."""
     doc = docx.Document(docx_file)
-    text = "\n".join([para.text for para in doc.paragraphs])
-    return text
+    return "\n".join(para.text for para in doc.paragraphs)
 
-def extract_text_from_txt(txt_file):
-    """Extrae texto de un archivo TXT."""
+def extract_text_from_txt(txt_file) -> str:
+    """Extrae texto de un objeto file-like TXT cargado por Streamlit."""
     return txt_file.read().decode("utf-8")
 
-def process_uploaded_file(uploaded_file):  
-    """Procesa un archivo subido por el usuario."""
-    if uploaded_file.name.endswith(".pdf"):
+def process_uploaded_file(uploaded_file) -> str:
+    """
+    Procesa un archivo subido por el usuario (pdf, docx o txt)
+    y devuelve todo su texto.
+    """
+    name = uploaded_file.name.lower()
+    if name.endswith(".pdf"):
         return extract_text_from_pdf(uploaded_file)
-    elif uploaded_file.name.endswith(".docx"):
+    if name.endswith(".docx"):
         return extract_text_from_docx(uploaded_file)
-    elif uploaded_file.name.endswith(".txt"):
+    if name.endswith(".txt"):
         return extract_text_from_txt(uploaded_file)
-    else:
-        return "Formato no compatible"
-
-def process_document(document_text):
-    """
-    Procesa el documento y evalúa los riesgos.
-    """
-    from src.risk_analysis import evaluate_risks  # ✅ Importación dentro de la función para evitar errores
-    risks = evaluate_risks(document_text)
-    return risks
-
-
-
+    raise ValueError(f"Formato no compatible: {uploaded_file.name}")
