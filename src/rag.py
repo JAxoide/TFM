@@ -18,7 +18,7 @@ def create_vector_db():
         print("⚠️ No se encontraron documentos en 'data/'. Agrega archivos para indexar.")
         return None
 
-    print(f"📄 Cargando {len(documents)} documentos en la base de datos vectorial...")
+    print(f"ߓĠCargando {len(documents)} documentos en la base de datos vectorial...")
 
     text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=100)
     docs = text_splitter.split_documents(documents)
