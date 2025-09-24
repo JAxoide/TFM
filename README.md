@@ -60,7 +60,10 @@ streamlit run ui.py
 
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
+Aquí una demo de su funcionamiento:
+
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
