@@ -5,6 +5,7 @@ Si no lo tienes instalado, abre el PowerShell o la Símbolo del sistema de Windo
 wsl --install
 
 Reinicia el ordenador cuando se te solicite.
+
 2. Abrir la terminal de WSL
 
 Abre la aplicación de WSL o la terminal de Windows y selecciona tu distribución de Linux (por ejemplo, Ubuntu).
@@ -58,6 +59,7 @@ streamlit run ui.py
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
