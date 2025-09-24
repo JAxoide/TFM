@@ -12,7 +12,7 @@ Abre la aplicación de WSL o la terminal de Windows y selecciona tu distribució
 Navega a la carpeta donde quieras guardar el proyecto y clona el repositorio de Git.
 
 cd /mnt/c/Users/TuUsuario/Documents
-git clone https://github.com/tu_usuario/tu_repositorio.git
+git clone https://github.com/JAxoide/TFM
 
 Ahora, entra en la carpeta del proyecto que acabas de clonar.
 
@@ -58,6 +58,7 @@ streamlit run ui.py
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
