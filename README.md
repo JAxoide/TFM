@@ -23,6 +23,7 @@ cd tu_repositorio
 Usa el comando cd para navegar hasta la carpeta donde se encuentra tu proyecto. Por ejemplo:
 
 cd /mnt/c/Users/TuUsuario/NombreDeTuProyecto
+
 4. Instalar las librerías de Python
 
 Primero, asegúrate de que tienes pip y venv instalados.
@@ -57,6 +58,7 @@ streamlit run ui.py
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
