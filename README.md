@@ -30,9 +30,10 @@ Primero, asegúrate de que tienes pip y venv instalados.
 sudo apt update
 sudo apt install python3-pip python3-venv
 
-Ahora, instala las librerías necesarias para el proyecto. Streamlit y Pandas son esenciales para muchas aplicaciones de análisis de datos.
+Ahora, instala las librerías necesarias para el proyecto. Para hacerlo, utiliza el archivo requirements.txt 
 
-pip install streamlit pandas
+pip install -r requirements.txt
+
 5. Crear e iniciar el entorno virtual
 
 Es una buena práctica crear un entorno virtual para aislar las dependencias del proyecto. Esto evita conflictos con otras aplicaciones de Python.
@@ -44,16 +45,19 @@ Activa el entorno virtual:
 source .venv/bin/activate
 
 Cuando el entorno esté activo, verás (.venv) al inicio de la línea de comandos.
+
 6. Entrar en la carpeta 'src' y ejecutar la aplicación
 
 Navega hasta la carpeta donde se encuentra tu archivo ui.py y ejecuta el comando de Streamlit.
 
-cd ~/PROYECTOS/TFM/src/
+En mi caso "cd ~/PROYECTOS/TFM/src/"
+
 streamlit run ui.py
 
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
