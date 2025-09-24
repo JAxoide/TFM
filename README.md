@@ -8,6 +8,7 @@ Reinicia el ordenador cuando se te solicite.
 2. Abrir la terminal de WSL
 
 Abre la aplicación de WSL o la terminal de Windows y selecciona tu distribución de Linux (por ejemplo, Ubuntu).
+Clonar el proyecto 
 3. Navegar a la carpeta del proyecto
 
 Usa el comando cd para navegar hasta la carpeta donde se encuentra tu proyecto. Por ejemplo:
@@ -44,4 +45,5 @@ streamlit run ui.py
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
