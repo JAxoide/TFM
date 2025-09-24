@@ -42,13 +42,13 @@ Es una buena práctica crear un entorno virtual para aislar las dependencias del
 
 python3 -m venv .venv
 
-Activa el entorno virtual:
-
 source .venv/bin/activate
 
 Cuando el entorno esté activo, verás (.venv) al inicio de la línea de comandos.
 
 6. Entrar en la carpeta 'src' y ejecutar la aplicación
+
+Activa el entorno virtual:
 
 Navega hasta la carpeta donde se encuentra tu archivo ui.py y ejecuta el comando de Streamlit.
 
@@ -59,6 +59,7 @@ streamlit run ui.py
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
