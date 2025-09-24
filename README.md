@@ -54,11 +54,14 @@ Navega hasta la carpeta donde se encuentra tu archivo ui.py y ejecuta el comando
 
 En mi caso "cd ~/PROYECTOS/TFM/src/"
 
+!! Antes de ejecutar la herramienta deberas editar el script config.py en el que deberas introducir la clave de OPEN AI (OPENAI_API_KEY = os.getenv("OPENAI_API_KEY",) que permite a la herramienta funcionar. Debido a los costes y el posible mal uso, esta clave no se incluye en este repositorio por motivos de seguridad. 
+
 streamlit run ui.py
 
 ¡Listo! La aplicación se iniciará en tu navegador web.
 
 https://youtu.be/jhp-T7gRaJo
+
 
 
 
